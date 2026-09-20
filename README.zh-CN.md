@@ -10,39 +10,148 @@
 
 ## 安装与更新
 
-需要 Node.js `^22.19.0 || >=24.0.0` 和 pnpm。包内包含预构建 JavaScript，
-安装不执行 prepare，也不需要重新生图或烘焙。
+**本仓库可以直接作为 DeepSeek Harness 的 Web 插件安装。** 当前包名为
+`dsh-linpianpian-skin`，版本为 `0.2.0`。仓库已包含 `lib/index.js`、
+`lib/client.js`、`cordis.patch.yml` 和内嵌美术资源；普通安装无需编译、Python、
+重新生图或烘焙，也不执行 `prepare`。它不是独立应用，需要由 Harness 加载。
+
+### 1. 准备环境与目标 profile
+
+需要 Node.js `^22.19.0 || >=24.0.0` 和 pnpm；从 GitHub 安装还需要 Git。
+以下命令适用于终端，Windows 建议使用 PowerShell：
 
 ```sh
+node --version
 npm install --global pnpm
-npx @deepseek-ai/dsh plugin --profile web add github:AiNaer/dsh-linpianpian-skin
-npx @deepseek-ai/dsh web
+pnpm --version
+npx @deepseek-ai/dsh --version
 ```
 
-需要固定版本时，在 GitHub 安装源后加 `#<tag-or-commit-sha>`。
-本地安装使用仓库或 tarball 的**绝对路径**。同版本替换必须先 remove 再 add，
-然后重启 Harness 并硬刷新浏览器，不能只覆盖压缩包。
+本文统一安装到 `web` profile，默认位置是 `~/.dsh/profiles/web`，
+设置了 `DSH_HOME` 时则位于该目录的 `profiles/web` 下。安装和启动必须使用同一个
+profile、同一个 `DSH_HOME`。已有全局 `dsh` 命令时，可用它替换 `npx @deepseek-ai/dsh`。
+宿主安装与启动说明见 [DeepSeek Harness 官方仓库](https://github.com/deepseek-ai/deepseek-harness)。
+
+先在原运行终端按 `Ctrl+C` 停止 Harness，再安装或更新。
+发布包与开发包 `@dsh-external/dsh-client-ui-skin-linpianpian` 共用 wiring id；
+**只有已装过开发包时**，先执行迁移：
 
 ```sh
-npx @deepseek-ai/dsh plugin --profile web remove dsh-linpianpian-skin
-npx @deepseek-ai/dsh plugin --profile web add /absolute/path/to/dsh-linpianpian-skin
+npx @deepseek-ai/dsh plugin --profile web remove @dsh-external/dsh-client-ui-skin-linpianpian
 ```
 
-发布包名为 `dsh-linpianpian-skin`，与开发包
-`@dsh-external/dsh-client-ui-skin-linpianpian` 不同，但共用 wiring id。
-从开发包迁移时，先将开发包从目标 profile 移除，再安装发布包。
-同一时间只启用一套完整皮肤；其他皮肤可保留安装，由兼容的皮肤管理器停用。
-若旧宿主仍挂载已禁用皮肤，需要先清除该皮肤在 profile 中的活动注册项再重启，
-仅隐藏 body 标记不足以解决双重挂载。
+### 2. 选择一种安装方式
 
-使用 dshmarket 的 profile 可以运行仓库提供的互斥激活工具：
+**方式 A：直接安装当前本地目录（Windows PowerShell）。**
+
+```powershell
+npx @deepseek-ai/dsh plugin --profile web add 'D:\D盘工作台\dsh-aihong\dsh-linpianpian-skin'
+```
+
+路径应指向包含 `package.json` 的仓库根目录；其他电脑请替换为实际**绝对路径**。
+pnpm 11 会把这种目录安装记录为 `link:`，因此安装后不要移动或删除该目录。
+只使用仓库已有构建产物时，不必先运行 `pnpm install` 或 `pnpm build`；
+修改源码后才需要按下方开发步骤重新构建。
+
+**方式 B：直接从 GitHub 安装。**
+
+```sh
+npx @deepseek-ai/dsh plugin --profile web add github:AiNaer/dsh-linpianpian-skin#master
+```
+
+`master` 是当前默认分支。需要固定版本时，把 `master` 替换为实际存在的 tag 或
+完整 commit SHA；不要把包版本号当作已经发布的 tag。此方式不要求先克隆仓库。
+
+**方式 C：先打包，再安装 `.tgz`（不依赖原仓库目录）。**
+
+在仓库根目录执行以下 PowerShell 命令：
+
+```powershell
+Set-Location 'D:\D盘工作台\dsh-aihong\dsh-linpianpian-skin'
+pnpm pack --pack-destination .
+npx @deepseek-ai/dsh plugin --profile web add 'D:\D盘工作台\dsh-aihong\dsh-linpianpian-skin\dsh-linpianpian-skin-0.2.0.tgz'
+```
+
+升级版本后以 `pnpm pack` 输出的实际文件名为准。保留 `.tgz` 以便重装；
+不要直接把源码文件夹复制进 Harness 的插件目录并期待自动启用。
+
+Windows 安装方式切换注意：本机 pnpm 11.22.0 验证中，本地目录安装与全新配置的
+`.tgz` 安装分别成功，但同一 profile 从目录链接切换到 `.tgz` 时曾出现
+`ERR_PNPM_EPERM` / `symlink` 错误。建议首次安装就选定一种方式；遇到该错误
+表示本次安装未完成，应先处理 pnpm 链接权限或残留依赖，再继续启动。
+
+### 3. 启用皮肤与处理冲突
+
+普通 Web profile 在 `plugin add` 成功后会自动注册插件，无需手工修改 Cordis 配置。
+**仅当目标 profile 已安装 dshmarket 时**，再运行互斥激活工具。
+有本地仓库时，在仓库根目录运行：
 
 ```sh
 node scripts/activate-skin.mjs --profile web
 ```
 
-工具保留状态中的未知字段，拒绝覆盖损坏 JSON，并要求本发布包已安装；它不会自行重启
-Harness。卸载使用上面的 remove 命令，重启后恢复原界面。
+GitHub / `.tgz` 安装后，也可以直接运行已安装包中的脚本（PowerShell）：
+
+```powershell
+$lppDshHome = if ($env:DSH_HOME) { $env:DSH_HOME } else { Join-Path $HOME '.dsh' }
+node (Join-Path $lppDshHome 'profiles/web/node_modules/dsh-linpianpian-skin/scripts/activate-skin.mjs') --profile web
+```
+
+脚本要求本发布包已安装，保留状态中的未知字段，拒绝覆盖损坏 JSON，只更新
+dshmarket 的启用状态，不会重启 Harness，也不会清除其他皮肤的 profile 注册。
+提示 `does not have dshmarket installed` 时，普通 profile 跳过此步骤即可，
+无需为了安装本皮肤额外安装 dshmarket。
+
+同一时间只能挂载一套完整皮肤。兼容的皮肤管理器可以停用其他皮肤；旧宿主若仍加载
+已禁用的鲸鱼女仆等皮肤，应停止 Harness，备份目标 profile 的 `package.json`，
+将对应包名从 `dependencies` 和 `dsh.profile.bundles` **两处**移除，再安装本皮肤。
+原皮肤 `.tgz` 可继续保留在 `plugins/` 中，无需删除素材归档。
+仅修改 `disabledSkins` 或隐藏 body 标记不能解决这种重复挂载。
+
+### 4. 启动并确认安装成功
+
+```sh
+npx @deepseek-ai/dsh web --port 3080
+```
+
+等待终端报告启动成功，打开 <http://127.0.0.1:3080/>，按 `Ctrl+F5` 强制刷新。
+确认宽屏首页显示书斋背景、双人物与桂枝侧栏，亮暗主题和设置页正常。
+窄屏会按设计隐藏人物，不代表安装失败。
+
+可在浏览器开发者工具控制台执行：
+
+```js
+({
+  skinActive: document.body.hasAttribute('data-dsh-linpianpian'),
+  maidActive: document.body.hasAttribute('data-dsh-maid-atelier'),
+  characterStages: document.querySelectorAll('[data-linpianpian-stage]').length,
+  backgroundStages: document.querySelectorAll('[data-lpp-background-stage]').length,
+})
+```
+
+预期依次为 `true`、`false`、`1`、`1`。若仍是旧界面，检查目标 profile、
+激活状态、原服务是否真正停止，以及安装时是否仍使用旧 `.tgz`。
+端口被占用时先停止原 Harness 实例，不要同时启动两个服务。
+
+### 5. 更新与卸载
+
+更新时先停止 Harness；本地源码有修改则先运行 `pnpm check`，使用 `.tgz` 时重新打包。
+然后移除已安装版本，再重新执行方式 A、B 或 C 的 add 命令：
+
+```sh
+npx @deepseek-ai/dsh plugin --profile web remove dsh-linpianpian-skin
+```
+
+完成后重新执行适用的激活步骤、启动 Harness 并强制刷新。
+**同版本替换也必须 remove → add → 激活（如适用）→ 重启 → 刷新**，
+不能只覆盖压缩包或只刷新浏览器。首次安装不需要执行 remove。
+
+卸载时执行同一条 remove 命令，然后重启 Harness；未启用其他皮肤时恢复原界面。
+
+安装验证记录（2026-09-20）：使用本机 Harness CLI `0.1.2-rc.1`、Node.js
+`24.16.0`、pnpm `11.22.0`，在隔离的 `DSH_HOME` 下分别验证目录和 `.tgz`
+安装、自动 bundle 注册及已安装浏览器文件哈希。`pnpm check` 的 29 项测试通过。
+本次安装核验未启动浏览器，实际显示仍需按第 4 步检查；GitHub 安装方式未在此次实装验证。
 
 ## 当前效果
 
