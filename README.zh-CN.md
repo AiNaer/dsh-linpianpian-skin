@@ -5,9 +5,6 @@
 面向 DeepSeek Harness Web UI 的独立显示层皮肤。0.2.0 将旧发布版更新为当前的
 临水藏书阁昼夜场景、精修双人物、薄绢刺绣输入框和桂枝装裱侧栏，不修改后端、模型或工具行为。
 
-![亮色预览](./preview/light.webp)
-![暗色预览](./preview/dark.webp)
-
 ## 安装与更新
 
 **本仓库可以直接作为 DeepSeek Harness 的 Web 插件安装。** 当前包名为

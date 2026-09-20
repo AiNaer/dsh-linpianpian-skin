@@ -7,9 +7,6 @@ updates the original release to the current Lin Pianpian study design: matched
 waterside-library scenes, refined characters, embroidered composer rails and
 an osmanthus-decorated sidebar. No backend, model or tool behavior is changed.
 
-![Light preview](./preview/light.webp)
-![Dark preview](./preview/dark.webp)
-
 ## Install or update
 
 **This repository is directly installable as a DeepSeek Harness Web plugin.**
