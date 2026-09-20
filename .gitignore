@@ -1,0 +1,14 @@
+node_modules/
+coverage/
+*.tgz
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+.chrome-test/
+.screens/
+.selftest/
+.ui/
+
+__pycache__/

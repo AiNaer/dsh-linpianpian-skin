@@ -1,0 +1,79 @@
+{
+  "name": "dsh-linpianpian-skin",
+  "version": "0.2.0",
+  "description": "Lin Pianpian pine-soot and gilt study skin with day/night library scenes and osmanthus sidebar decoration.",
+  "type": "module",
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./skin.json": "./skin.json",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AiNaer/dsh-linpianpian-skin.git"
+  },
+  "homepage": "https://github.com/AiNaer/dsh-linpianpian-skin#readme",
+  "bugs": {
+    "url": "https://github.com/AiNaer/dsh-linpianpian-skin/issues"
+  },
+  "author": "AiNaer",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "dsh-skin",
+    "theme",
+    "web-ui",
+    "linpianpian"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "jsdom": "29.1.1",
+    "tsdown": "0.22.14",
+    "typescript": "5.9.3",
+    "yaml": "2.8.1"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "lib/client.js.map",
+    "cordis.patch.yml",
+    "skin.json",
+    "skin.build.json",
+    "preview",
+    "scripts/activate-skin.mjs",
+    "LICENSE",
+    "LICENSE-ASSETS.md",
+    "NOTICE",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "scripts": {
+    "build": "tsdown && node scripts/write-skin-build.mjs",
+    "check": "pnpm typecheck && pnpm build && pnpm test && pnpm pack:dry-run",
+    "generate:art": "node scripts/generate-art.mjs",
+    "pack:dry-run": "pnpm pack --dry-run",
+    "test": "node --test tests/*.test.mjs",
+    "test:package": "node --test tests/package-contract.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "skin:activate": "node scripts/activate-skin.mjs --profile web"
+  }
+}

@@ -1,0 +1,59 @@
+Lin Pianpian Skin — Project Notice
+==================================
+
+Required Notice: Copyright (c) 2026 AiNaer
+
+Software source code is licensed under the PolyForm Noncommercial License
+1.0.0 in LICENSE. Original visual assets are licensed under CC BY-NC 4.0 as
+described in LICENSE-ASSETS.md. Third-party exceptions below retain their own terms.
+
+The repository may be used, modified, and redistributed for noncommercial
+purposes under those terms. Commercial use requires separate written
+permission from the copyright holder.
+
+DeepSeek Harness is a separate project by DeepSeek AI. This plugin is an
+independent community extension and does not include the DeepSeek Harness
+application itself.
+
+Third-party character material
+------------------------------
+
+The Lin Pianpian character references originate from the 《哀鸿：城破十日记》
+fan project and Bilibili creator “露痴了么”. Refined portraits and the sidebar
+mascot retain that attribution. Their upstream provenance specifies local
+personal use and prohibits redistribution, commercial use or repackaging;
+they are not relicensed as AiNaer-original CC BY-NC material by this update.
+The selected production masters required for reproducible artwork baking are
+retained under assets/gen/. Draft images and generation-session documents are
+not part of the release repository; their removal does not alter attribution
+or the original restrictions.
+
+Adapted software
+----------------
+
+Composer capsule/scroll behavior, popup dismissal, table expansion, settings
+protocol, lifecycle/layout patterns and build identity draw on
+Small-tailqwq/dsh-deep-whale (maid-atelier / orca-link). No artwork from that
+repository is copied. The applicable MIT notice is retained below.
+
+MIT License
+
+Copyright (c) 2026 Small-tailqwq
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -1,0 +1,5 @@
+# Lin Pianpian skin bundle patch. Installing this package adds its dual-face
+# client entry to the selected DeepSeek Harness profile.
+- insert:
+    - id: ui-skin-linpianpian
+      name: 'dsh-linpianpian-skin'

@@ -1,0 +1,28 @@
+{
+  "id": "linpianpian",
+  "name": "林翩翩 · 松烟鎏金书斋",
+  "nameEn": "Lin Pianpian · Pine-soot Study",
+  "author": "AiNaer（角色素材：露痴了么）",
+  "tagline": "松烟鎏金书斋、昼夜双场景与薄绢刺绣输入框",
+  "description": "背景、双人物与上下檐口随聊天区域适配；支持立绘时段、输入框胶囊与滚动显隐、宽表格展卷、宋体正文、背景开关和宽屏设置居中。所有资源内嵌，人物纯装饰，卸载还原。",
+  "tags": [
+    "linpianpian",
+    "study",
+    "guofeng",
+    "pine-soot",
+    "gilt"
+  ],
+  "accent": "#c9a24a",
+  "bodyAttr": "data-dsh-linpianpian",
+  "package": "dsh-linpianpian-skin",
+  "wiring": {
+    "id": "ui-skin-linpianpian",
+    "bundleWired": true
+  },
+  "preview": {
+    "light": "preview/light.webp",
+    "dark": "preview/dark.webp"
+  },
+  "order": 6,
+  "dshCompatibility": "0.1.2rc1"
+}
